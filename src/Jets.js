@@ -1,28 +1,35 @@
 import React from "react";
+import { getJets } from "./api/jetsApi";
 
 class Jets extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      jets: [
-        { id: 1, make: "Lockheed", model: "Stealth" },
-        { id: 2, make: "Lockheed", model: "F22" },
-        { id: 3, make: "Lockheed", model: "F35" }
-      ]
+      jets: []
     };
 
     // binding in the constructor
     // this.renderJets = this.renderJets.bind(this);
   }
 
-  deleteJet() {}
+  componentDidMount() {
+    getJets().then(jets => {
+      this.setState({ jets: jets });
+    });
+  }
+
+  deleteJet(id) {
+    // remove the Jet from the array of jets in state.
+    const jets = this.state.jets.filter(jet => jet.id !== id);
+    this.setState({ jets: jets });
+  }
 
   // Using concise arrow syntax
   renderJets = jet => (
     <tr key={jet.id}>
       <td>
-        <button onClick={this.deleteJet}>Delete</button>
+        <button onClick={() => this.deleteJet(jet.id)}>Delete</button>
       </td>
       <td>{jet.make}</td>
       <td>{jet.model}</td>
