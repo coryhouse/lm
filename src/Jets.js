@@ -10,8 +10,9 @@ function Jets(props) {
   const jets = useSelector(state => state.jets);
 
   useEffect(() => {
-    dispatch(loadJets());
-  }, [dispatch]);
+    // Only get jets if we haven't gotten em yet.
+    if (jets.length === 0) dispatch(loadJets());
+  }, [dispatch, jets.length]);
 
   function deleteJet(id) {
     // remove the Jet from the array of jets in state.

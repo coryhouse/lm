@@ -1,9 +1,11 @@
 import React from "react";
-import { addJet } from "./api/jetsApi";
-
+import { useDispatch } from "react-redux";
+import { addJet } from "./redux/actions/jetActions";
 const newJet = { make: "", model: "" };
 
 function ManageJets(props) {
+  const dispatch = useDispatch();
+
   const [jet, setJet] = React.useState(newJet);
 
   function handleChange(event) {
@@ -16,8 +18,8 @@ function ManageJets(props) {
 
   function handleSubmit(event) {
     event.preventDefault(); // don't post back to the server
-    addJet(jet).then(savedJet => {
-      alert("Jet saved with an id of " + savedJet.id);
+    dispatch(addJet(jet)).then(() => {
+      alert("Jet saved");
       setJet(newJet); // clear form
     });
   }
