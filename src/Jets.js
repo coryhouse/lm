@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getJets } from "./api/jetsApi";
+import { Link } from "react-router-dom";
 
 function Jets(props) {
   const [jets, setJets] = useState([]);
@@ -28,6 +29,7 @@ function Jets(props) {
   return (
     <>
       <h1>Jets</h1>
+      <Link to="/jets/manage">Add Jet</Link>
       <table>
         <thead>
           <tr>
