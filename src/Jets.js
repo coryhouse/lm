@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { getJets } from "./api/jetsApi";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loadJets } from "./redux/actions/jetActions";
 
 function Jets(props) {
-  const [jets, setJets] = useState([]);
+  const dispatch = useDispatch();
+
+  // Get data from the Redux store
+  const jets = useSelector(state => state.jets);
 
   useEffect(() => {
-    getJets().then(jets => setJets(jets));
-  }, []);
+    dispatch(loadJets());
+  }, [dispatch]);
 
   function deleteJet(id) {
     // remove the Jet from the array of jets in state.
-    setJets(jets.filter(jet => jet.id !== id));
+    // setJets(jets.filter(jet => jet.id !== id));
   }
 
   function renderJets(jet) {
